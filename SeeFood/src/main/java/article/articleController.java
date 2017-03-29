@@ -24,7 +24,7 @@ public class articleController extends HttpServlet {
 		System.out.println("================來自articleController.java的訊息================");
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();// 取得連線
-		Map<String, String> errors = new HashMap<String, String>();// 建立物件存放錯誤訊息
+		//Map<String, String> errors = new HashMap<String, String>();// 建立物件存放錯誤訊息
 		String search = request.getParameter("search"); // 取得搜索關鍵字
 		String select = request.getParameter("select"); // 取得搜索選項
 		String id = request.getParameter("id");// 取得文章編號
@@ -75,7 +75,7 @@ public class articleController extends HttpServlet {
 		// 驗證資料
 
 		if (search == null || search.trim().length() == 0) {
-			// 起始顯示搜尋所有文章的結果,沒有搜索關鍵字同樣搜尋所有文章的結果
+			// 起始顯示搜尋所有文章的結果,沒有搜索關鍵字同樣搜尋所有文章
 			System.out.println("執行搜尋所有文章");
 			List<ArticleBean> artic = new ArticleDAOJdbc().selectAll();
 			request.setAttribute("selectTitle", artic);

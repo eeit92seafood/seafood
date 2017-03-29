@@ -9,6 +9,8 @@ public class MemberBean {
 	private String memberBigPhoto;
 	private int memberBonus;
 	private java.util.Date loginTime;
+	private String underArticleId;
+	
 	
 	
 	
@@ -16,7 +18,14 @@ public class MemberBean {
 	public String toString() {
 		return "MemberBean [memberId=" + memberId + ", depId=" + depId + ", memberAddress=" + memberAddress
 				+ ", memberPassword=" + memberPassword + ", memberNicknName=" + memberNicknName + ", memberBigPhoto="
-				+ memberBigPhoto + ", memberBonus=" + memberBonus + ", loginTime=" + loginTime + "]";
+				+ memberBigPhoto + ", memberBonus=" + memberBonus + ", loginTime=" + loginTime + ", underArticleId="
+				+ underArticleId + "]";
+	}
+	public String getUnderArticleId() {
+		return underArticleId;
+	}
+	public void setUnderArticleId(String underArticleId) {
+		this.underArticleId = underArticleId;
 	}
 	public java.util.Date getLoginTime() {
 		return loginTime;

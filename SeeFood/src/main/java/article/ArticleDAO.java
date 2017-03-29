@@ -20,4 +20,6 @@ public interface ArticleDAO {
 	ArticleBean selecttopone(); //找最新一筆資料
 	
 	int delect(int articleId); //刪除文章
+	
+	ArticleBean update(int articleId,int articlePeople,int articleTotalStar,int articleAverageStar);//修改文章分數
 }

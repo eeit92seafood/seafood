@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bonus.BonusDAOJdbc;
 import login.MemberBean;
 
 @WebServlet("/pages/change.controller")
@@ -68,14 +69,14 @@ public class ChangeComtroller extends HttpServlet {
 		String cutWord = word.replaceAll(tagPattern, " "); // 除去標籤
 		cutWord = cutWord.replaceAll("&nbsp;", " "); // 除去 &nbsp; (空白鍵)
 
-		if (cutWord.trim().length() < 80) { // 檢查除去後是否有超過30字
+		if (cutWord.trim().length() < 80) { // 檢查除去後是否有超過80字
 			System.out.println("少於80字的消息");
 			errors.put("wordLess", "文章內容少於80字"); // 放錯誤訊息,關鍵字"errors.wordLess"
 			request.getRequestDispatcher("/pages/article/article.jsp").forward(request, response);// 回傳錯誤訊息,並停留原頁面
 			System.out.println("====================訊息結束====================");
 			return;
 		}
-
+       
 		cutWord = cutWord.substring(0, 80); // 擷取剛好80字
 
 		// 執行DAO
@@ -88,6 +89,14 @@ public class ChangeComtroller extends HttpServlet {
 			artic.setMemberNicknName(bean.getMemberNicknName());// 取得暱稱
 			artic = new ArticleDAOJdbc().insert(artic); // 將文章的bean透過ArticleDAOJdbc的insert方法執行新增
 			ArticleBean articlebean = new ArticleDAOJdbc().selecttopone(); // 新增文章就是最新文章(限定DEMON的情況)
+			int a=500;   //暫定發表文章給五百點
+			session.setAttribute("bonus", "恭喜你獲得  "+a+" 點");// bean存進session當作登入標準,網頁以暱稱做判斷${bean.memberNicknName}
+			System.out.println("現有點數="+bean.getMemberBonus());
+			System.out.println("獲得點數="+a);
+			int memberBonus=bean.getMemberBonus()+a;//原有紅利加上獲得紅利
+			System.out.println("總紅利="+bean.getMemberBonus()+"+"+a+"="+memberBonus);
+			bean=new BonusDAOJdbc().updataBonus(bean.getMemberId(), memberBonus);
+			request.setAttribute("bean", bean);
 			request.setAttribute("articleid", articlebean); // 搜尋最新的結果放進session
 			request.getRequestDispatcher("/pages/article/seearticle.jsp").forward(request, response);// 回傳搜尋結果,並停留原頁面
 			System.out.println("====================訊息結束====================");

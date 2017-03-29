@@ -194,7 +194,7 @@ public class ArticleDAOJdbc implements ArticleDAO {
 			stmt.setInt(5, articleId);
 			int i = stmt.executeUpdate();
 			if(i==1) {
-				System.out.println("更新成功");
+				System.out.println("文章更新成功");
 				result = this.selectarticleId(articleId);
 			}
 		}catch(SQLException e){
@@ -293,6 +293,33 @@ public class ArticleDAOJdbc implements ArticleDAO {
 			}
 			
 			return 0;
+	}
+	
+	
+	
+	private static final String UPDATESTAR="update article set articlePeople=?, articleTotalStar=?,articleAverageStar=? where articleId=?";
+	@Override
+	public ArticleBean update(int articleId, int articlePeople, int articleTotalStar, int articleAverageStar) {
+		System.out.println("修改文章分數(update)");
+		ArticleBean result=null;
+		try(Connection conn = dataSource.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(UPDATESTAR);){
+			stmt.setInt(1, articlePeople);
+			stmt.setInt(2, articleTotalStar);
+			stmt.setInt(3, articleAverageStar);
+			stmt.setInt(4, articleId);
+			int i = stmt.executeUpdate();
+			if(i==1) {
+				System.out.println("文章分數更新成功");
+				result = this.selectarticleId(articleId);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+		
 	}
 	
 	
